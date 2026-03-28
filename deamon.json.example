@@ -1,0 +1,7 @@
+// /etc/docker/daemon.json
+{
+  "metrics-addr": "0.0.0.0:9323",
+  "experimental": true
+}
+
+// or ~/.docker/daemon.json for MacOS

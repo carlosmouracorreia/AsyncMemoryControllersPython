@@ -1,0 +1,41 @@
+{
+    "id": null,
+    "title": "Docker Container Memory Usage",
+    "tags": ["docker", "memory"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "templating": {
+      "list": [
+        {
+          "name": "container",
+          "type": "query",
+          "label": "Container",
+          "datasource": "Prometheus",
+          "query": "label_values(docker_container_memory_bytes, container)",
+          "multi": true,
+          "includeAll": true,
+          "allValue": ".*"
+        }
+      ]
+    },
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Container Memory Usage (MB)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "docker_container_memory_bytes{container=~\"$container\"} / 1024 / 1024",
+            "legendFormat": "{{container}}",
+            "refId": "A"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 0, "w": 24, "h": 8},
+        "yaxes": [
+          {"format": "bytes", "label": "Memory (MB)", "logBase": 1, "min": 0},
+          {"show": false}
+        ]
+      }
+    ]
+  }
