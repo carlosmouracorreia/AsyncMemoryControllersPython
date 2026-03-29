@@ -25,7 +25,7 @@ metrics.register_default(
 
 def enqueue(action):
     with open(QUEUE_FILE, "a") as f:
-        f.write(json.dumps({"action": action}) + "\n")
+        f.write(json.dumps({"action": action, "ceiling_mb": 2000}) + "\n")
 
 @app.route("/metrics")
 def metrics_endpoint():
@@ -61,7 +61,7 @@ def getroute2():
 @app.get("/memory")
 def memory_control():
     action = request.args.get("action", "").upper()
-    if action not in ["ALLOCATE", "CLEAR", "STOP", "KEEP_ALLOCATING_CYCLE"]:
+    if action not in ["ALLOCATE", "CLEAR", "STOP", "EXIT"]:
         return jsonify({"error": "invalid action"}), 400
 
     enqueue(action)

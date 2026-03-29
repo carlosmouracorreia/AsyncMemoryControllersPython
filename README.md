@@ -1,5 +1,18 @@
 # AsyncUtils Python - Showcase
 
+Simple webserver with increasing on-demand charge and metrics control simulator
+
+what this app does now:
+- allocates memory via http request in flask-server container - with a simple queue worker
+- exposes flask-server webserver metrics
+- keeps track of container memory usage on docker stats via a container in loop that collects them via docker client with access to host docker socket and exposes them with a flask server to prometheus
+- grafana dashboards to track webserver metrics and container memory usage
+
+next steps:
+- create better CLI to expose the parallel_processing_scripts
+- generate and collect data via csv in a multithread way.
+- test simple redis/rabbitMQ/kafka in memory
+
 ## Flask app metrics
 
 The `flask-app` service now exposes Prometheus metrics on `http://localhost:8081/metrics`.

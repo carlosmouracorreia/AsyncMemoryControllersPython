@@ -14,30 +14,62 @@ logger = logging.getLogger(__name__)
 memory_hog = []
 file_position = 0
 running = True
+is_allocating = False
+
+
+def get_current_memory_mb():
+    """Calculate current allocated memory in MB"""
+    return len(memory_hog) * 20
 
 
 def process_task(task):
-    global running
+    global running, is_allocating
 
     action = task.get("action")
 
     if action == "ALLOCATE":
-        memory_hog.append(bytearray(1024 * 1024))
-        logger.info(f"Allocated 1MB, total blocks: {len(memory_hog)}")
+        ceiling_mb = task.get("ceiling_mb", 1000)
+        is_allocating = True
+        logger.info(f"Starting allocation loop until {ceiling_mb}MB")
 
-    elif action == "KEEP_ALLOCATING_CYCLE":
-        while running:
-            memory_hog.append(bytearray(1024 * 1024 * 10))
-            logger.info(f"Allocated 10MB, total blocks: {len(memory_hog)}")
-            time.sleep(1)
+        while is_allocating and get_current_memory_mb() < ceiling_mb:
+            memory_hog.append(bytearray(1024 * 1024 * 20))  # 20MB
+            logger.info(f"Allocated 20MB, total: {get_current_memory_mb()}MB")
+
+            # Check for interrupt tasks every 0.2 seconds (5 checks per second)
+            for _ in range(5):
+                time.sleep(0.2)
+                pending = read_new_tasks()
+                for pending_task in pending:
+                    pa = pending_task.get("action")
+                    if pa == "STOP":
+                        logger.info("STOP received during allocating")
+                        is_allocating = False
+                    elif pa == "EXIT":
+                        logger.info("EXIT received during allocating")
+                        is_allocating = False
+                        running = False
+                    elif pa == "CLEAR":
+                        memory_hog.clear()
+                        logger.info("CLEAR received during allocating (memory cleared)")
+                if not is_allocating or not running:
+                    break
+
+        is_allocating = False
+        logger.info(f"Allocation stopped. Current: {get_current_memory_mb()}MB")
+
+    elif action == "STOP":
+        logger.info("Stopping allocation")
+        is_allocating = False
+
+    elif action == "EXIT":
+        logger.info("Exiting worker")
+        is_allocating = False
+        running = False
 
     elif action == "CLEAR":
         memory_hog.clear()
         logger.info("Memory cleared")
-
-    elif action == "STOP":
-        logger.info("Stopping worker")
-        running = False
 
     else:
         logger.warning(f"Unknown task: {task}")
