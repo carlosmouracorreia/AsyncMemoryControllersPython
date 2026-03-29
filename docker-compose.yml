@@ -1,17 +1,17 @@
 version: "3"
 services:
+  flask-app:
+    build: ./flask-server
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./flask-server:/app
   docker-exporter:
     build: ./docker-metrics-exporter
     ports:
       - "8000:8000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  flask-app:
-    build: ./flask-server
-    ports:
-      - "8081:8080"
-  # produces external metrics about the host machine, such as CPU and memory usage
-  # is this exporting metrics about the docker container or about the host machine?
   prometheus:
     image: prom/prometheus:latest
     volumes:
