@@ -25,6 +25,12 @@ def process_task(task):
         memory_hog.append(bytearray(1024 * 1024))
         logger.info(f"Allocated 1MB, total blocks: {len(memory_hog)}")
 
+    elif action == "KEEP_ALLOCATING_CYCLE":
+        while running:
+            memory_hog.append(bytearray(1024 * 1024 * 10))
+            logger.info(f"Allocated 10MB, total blocks: {len(memory_hog)}")
+            time.sleep(1)
+
     elif action == "CLEAR":
         memory_hog.clear()
         logger.info("Memory cleared")

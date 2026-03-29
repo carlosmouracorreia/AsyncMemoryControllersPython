@@ -61,7 +61,7 @@ def getroute2():
 @app.get("/memory")
 def memory_control():
     action = request.args.get("action", "").upper()
-    if action not in ["ALLOCATE", "CLEAR", "STOP"]:
+    if action not in ["ALLOCATE", "CLEAR", "STOP", "KEEP_ALLOCATING_CYCLE"]:
         return jsonify({"error": "invalid action"}), 400
 
     enqueue(action)
