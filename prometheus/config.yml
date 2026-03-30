@@ -2,8 +2,11 @@
 # https://oneuptime.com/blog/post/2026-01-25-monitor-docker-prometheus/view
 
 global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
+  scrape_interval: 7s
+  evaluation_interval: 7s
+  # what's the difference between these two?
+  # scrape_interval: how often Prometheus scrapes the targets for metrics
+  # evaluation_interval: how often Prometheus evaluates the rules (if you have any alerting or recording rules defined)
 
 scrape_configs:
   # Scrape docker-exporter for all the container metrics
