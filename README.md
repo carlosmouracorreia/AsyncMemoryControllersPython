@@ -1,6 +1,6 @@
 # AsyncUtils Python - Showcase
 
-Simple webserver with increasing on-demand charge and metrics control simulator
+Simple containerized webserver and observability setup with increasing on-demand charge and metrics control simulator
 
 what this app does now:
 - allocates memory via http request in flask-server container - with a simple queue worker
