@@ -12,6 +12,7 @@ next steps:
 - Create documentation/CLI to integrate the parallel_processing_scripts programs.
 - Generate and collect data from a csv in a multithreaded way.
 - Maybe test simple Redis/RabbitMQ/Kafka setup
+- If reasonable, integrate Orchestration with Kubernetes/Helm setup
 
 ### What is collected
 
