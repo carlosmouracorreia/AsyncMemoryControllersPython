@@ -1,9 +1,9 @@
 # AsyncUtils Python - Showcase
 
-Simple containerized webserver and observability setup with increasing on-demand charge and metrics control simulator
+Simple containerized webserver and observability setup with increasing on-demand memory allocation and metrics control - e.g a memory control simulator
 
 What this app does now:
-- Allocates memory via http request in flask-server container - with a simple queue worker
+- Allocates memory via http request in flask-server container - with a simple queue worker 
 - Exposes Flask Server HTTP request metrics
 - Keeps track of container memory usage on docker stats via a container in loop that collects them via a docker client with access to host docker socket and exposes them with a flask server to prometheus metrics service.
 - Keeps Grafana dashboards to track webserver metrics and container memory usage
