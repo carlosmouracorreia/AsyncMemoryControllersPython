@@ -1,4 +1,4 @@
-# AsyncMemoryControls — memory-control simulator with observability
+# AsyncMemoryControlPlane — memory-control simulator with observability
 
 A compact setup to simulate memory pressure inside a container and observe its effects via Prometheus and Grafana.
 
