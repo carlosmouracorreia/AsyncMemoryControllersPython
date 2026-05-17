@@ -1,12 +1,12 @@
 version: "3"
 services:
-  flask-app:
+  control-center-flask-api:
     build: ./flask-server
     ports:
       - "8081:8080"
     volumes:
       - ./flask-server:/app
-  docker-exporter:
+  docker-stats-exporter:
     build: ./docker-metrics-exporter
     ports:
       - "8000:8000"
@@ -18,8 +18,8 @@ services:
       - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
     restart: unless-stopped
     depends_on:
-      - flask-app
-      - docker-exporter
+      - control-center-flask-api
+      - docker-stats-exporter
     ports:
       - "9090:9090"
   grafana:
