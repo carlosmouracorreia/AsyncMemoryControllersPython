@@ -1,9 +1,9 @@
-# AsyncUtils Python - Showcase
+# AsyncMemoryControls With Python and Observability Showcase
 
 Simple containerized webserver and observability setup with increasing on-demand memory allocation and metrics control - e.g a memory control simulator
 
 What this app does now:
-- Has a container with a Python Flask API control center and simple queue process
+- Has a container with a Python Flask API control center and simple queue process - using sync python
 - Has a container that exposes Docker Stats via another Flask web-server
 - Has a container with Grafana Observability Tools and another with Prometheus Metrics Server
 
@@ -16,6 +16,7 @@ What this app does now:
 next steps:
 - Create documentation/CLI to integrate the parallel_processing_scripts programs.
 - Generate and collect data from a csv in a multithreaded way.
+- Use async python features / syntax
 - Maybe test simple Redis/RabbitMQ/Kafka setup
 - If reasonable, integrate Orchestration with Kubernetes/Helm setup here.
 
